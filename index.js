@@ -1,4 +1,5 @@
 const express = require('express');
+const res = require('express/lib/response');
 const app = express();
 app.use(express.json());
 
@@ -34,8 +35,8 @@ app.get('/api/persons', (req, res) => {
 })
 
 app.get('/api/persons/:id', (req, res) => {
-  let ident = +req.params.id;
-  let note = phones.find(elem => elem.id === ident);
+  let id = +req.params.id;
+  let note = phones.find(elem => elem.id === id);
 
   (note)
     ? res.json(note)
@@ -49,6 +50,13 @@ app.get('/info', (req, res) => {
     `<p>The phonebook has ${phones.length} entries
      <p>${date}</p>`
   ) 
+})
+
+app.delete('/api/persons/:id', (req, res) => {
+  let id = +req.params.id;
+  phones = phones.filter(note => note.id !== id);
+
+  res.status(204).end();
 })
 
 
