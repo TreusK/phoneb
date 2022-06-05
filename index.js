@@ -26,6 +26,11 @@ let phones = [
     }
 ];
 
+function getRandom(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+
 app.get('/', (req, res) => {
     res.send('<h1>Testin phone</h1>')
 });
@@ -59,6 +64,24 @@ app.delete('/api/persons/:id', (req, res) => {
   res.status(204).end();
 })
 
+app.post('/api/persons', (req, res) => {
+  let body = req.body;
+
+  if(!body.name || !body.number) {
+    return res.status(400).json({
+      error: 'Missing name or number'
+    })
+  }
+
+  let note = {
+    id: getRandom(1, 1000),
+    name: body.name,
+    number: body.number
+  }
+  phones = phones.concat(note);
+  
+  res.json(note)
+})
 
 
 const PORT = 3001;
