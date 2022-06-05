@@ -71,6 +71,10 @@ app.post('/api/persons', (req, res) => {
     return res.status(400).json({
       error: 'Missing name or number'
     })
+  } else if (phones.filter(note => note.name === body.name).length !== 0) {
+    return res.status(400).json({
+      error: 'Name must be unique'
+    })
   }
 
   let note = {
