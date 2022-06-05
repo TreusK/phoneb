@@ -33,6 +33,16 @@ app.get('/api/persons', (req, res) => {
     res.json(phones);
 })
 
+app.get('/api/persons/:id', (req, res) => {
+  let ident = +req.params.id;
+  let note = phones.find(elem => elem.id === ident);
+
+  (note)
+    ? res.json(note)
+    : res.status(404).end();
+  
+})
+
 app.get('/info', (req, res) => {
   let date = new Date();
   res.send(
@@ -40,6 +50,8 @@ app.get('/info', (req, res) => {
      <p>${date}</p>`
   ) 
 })
+
+
 
 const PORT = 3001;
 app.listen(PORT, () => {
